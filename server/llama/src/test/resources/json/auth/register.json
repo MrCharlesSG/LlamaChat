@@ -1,0 +1,11 @@
+{
+  "register": {
+    "email": "valid.email@example.com",
+    "name": "John",
+    "password": "StrongPassword123!"
+  },
+  "login": {
+    "username": "valid.email@example.com",
+    "password": "StrongPassword123!"
+  }
+}

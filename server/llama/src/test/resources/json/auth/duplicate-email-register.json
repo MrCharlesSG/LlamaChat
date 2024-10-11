@@ -1,0 +1,8 @@
+{
+  "duplicateRegister": {
+    "email": "vic.mar@example.com",
+    "name": "Victor",
+    "password": "AnotherStrongPassword123!",
+    "expectedError": "Email is already in use"
+  }
+}

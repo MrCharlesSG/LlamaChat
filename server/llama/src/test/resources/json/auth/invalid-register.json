@@ -1,0 +1,20 @@
+{
+  "invalidRegisters": [
+    {
+      "email": "",
+      "name": "John",
+      "password": "StrongPassword123!"
+
+    },
+    {
+      "email": "invalid-email",
+      "name": "John",
+      "password": "StrongPassword123!"
+    },
+    {
+      "email": "valid.email@example.com",
+      "name": "",
+      "password": "StrongPassword123!"
+    }
+  ]
+}
