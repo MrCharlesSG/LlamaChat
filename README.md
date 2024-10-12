@@ -1,11 +1,49 @@
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+
+- [1. Introduction](#1-introduction)
+   * [1.1. Overview](#11-overview)
+   * [1.2. Purpose](#12-purpose)
+   * [1.3. Features](#13-features)
+- [2. Project Structure](#2-project-structure)
+   * [2.1. Server (Spring Boot)](#21-server-spring-boot)
+   * [2.2. Frontend (Next.js)](#22-frontend-nextjs)
+- [3. Getting Started](#3-getting-started)
+- [4. Spring Architecture](#4-spring-architecture)
+   * [4.1. Authentication](#41-authentication)
+      + [**4.1.1. Short-lived `accessToken`**](#411-short-lived-accesstoken)
+      + [**4.1.2. Long-lived `token`**](#412-long-lived-token)
+      + [**4.1.3. Refreshing the `accessToken`**](#413-refreshing-the-accesstoken)
+   * [4.2. OAuth 2 Integration with GitHub](#42-oauth-2-integration-with-github)
+      + [4.2.1. Authentication Flow](#421-authentication-flow)
+      + [4.2.2. Implementation Details](#422-implementation-details)
+      + [4.2.3. Key Components](#423-key-components)
+      + [**`SecurityConfig` Class**](#securityconfig-class)
+      + [**OAuth2 Authentication Success Handler**](#oauth2-authentication-success-handler)
+   * [4.3. AI Integration](#43-ai-integration)
+      + [4.3.1. AI Functions](#431-ai-functions)
+      + [4.3.2. Code Implementation](#432-code-implementation)
+   * [4.4. Domain](#44-domain)
+- [5. Next.js Architecture](#5-nextjs-architecture)
+   * [5.1. Authentication Flow](#51-authentication-flow)
+      + [5.1.1. Middleware](#511-middleware)
+      + [5.1.2. Token Management](#512-token-management)
+   * [5.2. Chat Functionality](#52-chat-functionality)
+   * [5.3. **Handling REST API Reponses**](#53-handling-rest-api-reponses)
+   * [5.4. Appearance](#54-appearance)
+
+<!-- TOC end -->
+
+<!-- TOC --><a name="1-introduction"></a>
 # 1. Introduction
 
+<!-- TOC --><a name="11-overview"></a>
 ## 1.1. Overview
 
 This project is a comprehensive web application that integrates a Spring Boot backend with a Next.js (React-based) frontend to offer a seamless user experience for managing chatbot interactions. The chatbot can provide real-time currency exchange rates and weather information for cities worldwide.
 
 The backend is powered by a RESTful API, handling authentication via JWT tokens, allowing users to log in either through their email or GitHub accounts. The frontend, built with Next.js, delivers an intuitive and responsive web interface, ensuring accessibility and ease of use.
 
+<!-- TOC --><a name="12-purpose"></a>
 ## 1.2. Purpose
 
 This project was developed with three primary goals in mind:
@@ -16,6 +54,7 @@ This project was developed with three primary goals in mind:
 
 This documentation is intended for anyone interested in learning about or replicating this project. It is particularly useful for developers seeking to integrate AI, OAuth 2.0, and JWT authentication with Spring Boot and Next.js.
 
+<!-- TOC --><a name="13-features"></a>
 ## 1.3. Features
 
 The application supports the following key user stories:
@@ -28,8 +67,10 @@ The application supports the following key user stories:
 6. As a user, I want to obtain up-to-date weather information for any city, so I can make informed decisions based on current weather conditions.
 7. As a user, I want access to current currency exchange rates, so I can stay informed about financial trends and make better economic choices.
 
+<!-- TOC --><a name="2-project-structure"></a>
 # 2. Project Structure
 
+<!-- TOC --><a name="21-server-spring-boot"></a>
 ## 2.1. Server (Spring Boot)
 
 - **Repository Link**
@@ -51,6 +92,7 @@ The application supports the following key user stories:
         - JWT for security
         - Mock H2 for the database
 
+<!-- TOC --><a name="22-frontend-nextjs"></a>
 ## 2.2. Frontend (Next.js)
 
 - **Repository Link**
@@ -70,14 +112,17 @@ The application supports the following key user stories:
         - Tailwind CSS for styling
         - Context API for state management
 
+<!-- TOC --><a name="3-getting-started"></a>
 # 3. Getting Started
 
 The application can not be cloned an run easily since it is needed some private keys for accessing service such us the OAuth with Github or the Weather API for the real-time data.
 
+<!-- TOC --><a name="4-spring-architecture"></a>
 # 4. Spring Architecture
 
 The structure of the server  follows the layered architecture pattern with controllers, services, and repositories. In this section will be explained the key functions of the application. 
 
+<!-- TOC --><a name="41-authentication"></a>
 ## 4.1. Authentication
 
 All endpoints in the database but the login and register and refresh token are protected endpoints. This means that every client of the server needs to  provide a header with the keyword  **`Authorization`** and the value **`Bearer *accessToken*`**.
@@ -104,14 +149,17 @@ When registering, the user also receives their information wrapped in a wrapper.
 
 The **`accessToken`** allows the user to access protected endpoints. However, it is valid for only 10 minutes, while the **`token`** is valid for seven days. Here’s why:
 
+<!-- TOC --><a name="411-short-lived-accesstoken"></a>
 ### **4.1.1. Short-lived `accessToken`**
 
 The **`accessToken`** is valid for 10 minutes to minimize security risks. Since the **`accessToken`** is used frequently in almost every request to protected endpoints, there is a higher risk of it being intercepted or stolen. By limiting its lifespan, the window of opportunity for an attacker to use a stolen token is significantly reduced, enhancing overall security.
 
+<!-- TOC --><a name="412-long-lived-token"></a>
 ### **4.1.2. Long-lived `token`**
 
 The **`token`**, on the other hand, is valid for seven days. This longer lifespan provides a more convenient user experience. Users don’t have to log in repeatedly throughout the day. Instead, they can use the **`token`** to refresh their **`accessToken`** when it expires. This way, users only need to log in once a week, balancing security and convenience.
 
+<!-- TOC --><a name="413-refreshing-the-accesstoken"></a>
 ### **4.1.3. Refreshing the `accessToken`**
 
 To refresh the **`accessToken`**, the user calls the **`/auth/api/v1/refreshToken`** endpoint with the **`token`** in the request body. This process extends the user's session without requiring them to re-enter their credentials frequently, thus maintaining a seamless and secure user experience.
@@ -133,8 +181,10 @@ To refresh the **`accessToken`**, the user calls the **`/auth/api/v1/refreshTo
 ![token](https://github.com/user-attachments/assets/7393d045-c90e-433b-ab09-bd728ac5f7ec)
 
 
+<!-- TOC --><a name="42-oauth-2-integration-with-github"></a>
 ## 4.2. OAuth 2 Integration with GitHub
 
+<!-- TOC --><a name="421-authentication-flow"></a>
 ### 4.2.1. Authentication Flow
 
 This project follows GitHub's recommended OAuth 2.0 flow for web applications to manage authentication. The process ensures secure authorization, leveraging GitHub as an identity provider. The flow is outlined below:
@@ -150,6 +200,7 @@ This project follows GitHub's recommended OAuth 2.0 flow for web applications to
 
 ![oauth](https://github.com/user-attachments/assets/6abe2deb-971c-4654-a4c5-949cd0588d44)
 
+<!-- TOC --><a name="422-implementation-details"></a>
 ### 4.2.2. Implementation Details
 
 The server plays a key role in managing this OAuth 2.0 flow. Its responsibilities include:
@@ -175,8 +226,10 @@ spring.security.oauth2.client.provider.github.user-name-attribute=id
 
 Although much of the OAuth 2.0 process is automated by Spring Security, developers are still responsible for customizing key aspects to fit their business logic.
 
+<!-- TOC --><a name="423-key-components"></a>
 ### 4.2.3. Key Components
 
+<!-- TOC --><a name="securityconfig-class"></a>
 ### **`SecurityConfig` Class**
 
 The `SecurityConfig` class manages the security settings for the application, including the configuration of OAuth 2.0 authentication. A critical part of this setup is defining a `SuccessHandler` to handle what happens after a user successfully authenticates. This handler is where the business logic for token generation and redirection to the frontend occurs.
@@ -224,6 +277,7 @@ public class SecurityConfig {
 }
 ```
 
+<!-- TOC --><a name="oauth2-authentication-success-handler"></a>
 ### **OAuth2 Authentication Success Handler**
 
 The `OAuth2AuthenticationSuccessHandler` is responsible for executing custom business logic after the user successfully authenticates with GitHub. This includes fetching user details, creating a new user if needed, generating the JWT tokens, and redirecting the user to the frontend with the tokens.
@@ -270,6 +324,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
 This handler ensures that, upon successful GitHub authentication, the server processes the user’s details, generates the necessary tokens (JWT access and refresh tokens), and then securely redirects the user back to the frontend application, providing them with access to protected resources.
 
+<!-- TOC --><a name="43-ai-integration"></a>
 ## 4.3. AI Integration
 
 The backend of the application integrates Meta's LLaMA 3.1 model, a state-of-the-art generative model from Meta (formerly Facebook). Integrating this model into the Spring Boot application is straightforward. By simply configuring the model in the `application.properties` file, as shown below, the LLaMA 3.1 model becomes ready for use.
@@ -299,6 +354,7 @@ public class ChatService {
 }
 ```
 
+<!-- TOC --><a name="431-ai-functions"></a>
 ### 4.3.1. AI Functions
 
 AI Functions extend the capabilities of the LLaMA model, allowing it to retrieve external information, such as weather data and currency exchange rates, which the model wouldn't have access to natively. This workflow enables dynamic data fetching during chatbot interactions and is crucial for this project’s use cases, including real-time weather updates and currency exchange queries.
@@ -313,6 +369,7 @@ The workflow for using functions in the LLaMA model is as follows:
 
 ![Models Functions-2](https://github.com/user-attachments/assets/4171d97c-1ecb-4dd9-92e6-e5e67e95824f)
 
+<!-- TOC --><a name="432-code-implementation"></a>
 ### 4.3.2. Code Implementation
 
 1. Each function is defined and registered as a Spring bean, specifying its name and description. For example, the function to fetch exchange rates is defined as follows:
@@ -435,18 +492,22 @@ The workflow for using functions in the LLaMA model is as follows:
     ```
     
 
+<!-- TOC --><a name="44-domain"></a>
 ## 4.4. Domain
 
 ![domain](https://github.com/user-attachments/assets/02075c4d-70e5-4412-94a7-de753eccfd93)
 
+<!-- TOC --><a name="5-nextjs-architecture"></a>
 # 5. Next.js Architecture
 
 The Next.js frontend is a responsive web application designed to provide users with seamless interaction. It leverages component-based architecture, where reusable components are built to structure the user interface (UI). The architecture includes state management for chat functionality, middleware for authentication, and integration with REST APIs for backend communication.  Below is an overview of the main elements of the architecture.
 
+<!-- TOC --><a name="51-authentication-flow"></a>
 ## 5.1. Authentication Flow
 
 The application secures protected routes through a robust authentication flow, ensuring that only authenticated users can access sensitive pages. This flow is governed by a middleware function that verifies the presence of valid tokens before granting access to certain pages.
 
+<!-- TOC --><a name="511-middleware"></a>
 ### 5.1.1. Middleware
 
 In `middleware.js`, the application defines protected and public routes. The middleware intercepts every incoming request to validate the user’s session status. Protected routes (e.g., `/chat`, `/profile`) are restricted to authenticated users, while public routes (e.g., `/login`, `/signup`) are accessible without authentication.
@@ -456,6 +517,7 @@ In `middleware.js`, the application defines protected and public routes. The mid
 
 This ensures smooth navigation while maintaining security, as users are automatically routed based on their session status.
 
+<!-- TOC --><a name="512-token-management"></a>
 ### 5.1.2. Token Management
 
 When ever we want to make an authenticated request to the server we will need the authentication header. This header is the already mention `Bearer accessToken`.  This `accessToken` is stored in the cookies in every session login or register with the `token` and the `lastRefresh` (instant when the `accesssToken` was refreshed). 
@@ -467,12 +529,14 @@ The process of getting the **authentication header** is as follows:
 3. If `accessToken` is expired, then is refreshed making the call to the server
 4. The access token is returned in the `Bearer accessToken` format.
 
+<!-- TOC --><a name="52-chat-functionality"></a>
 ## 5.2. Chat Functionality
 
 The chat functionality is a key feature of the application and is powered by a global state management context, `ChatProvider`. This provider is responsible for handling chat-specific states, such as the currently selected chat, the state of message sending, and controlling the chat flow between different components.
 
 The `ChatProvider` creates a global state for chat-related data, which includes the `selectedChatId` (the ID of the currently selected chat) and a flag to indicate whether a message is currently being sent (`onSending`). The global state is accessible throughout the application via the `useChat` hook, ensuring that components can share and update chat-related information.
 
+<!-- TOC --><a name="53-handling-rest-api-reponses"></a>
 ## 5.3. **Handling REST API Reponses**
 
 In Next.js, the `/api` routes allow the frontend to interact with the backend services through server-side functions, acting as an intermediary layer between the client and the backend. These routes are part of the API layer exposed by Next.js itself and are useful for handling backend logic, making external requests, and responding to frontend requests.
@@ -491,6 +555,7 @@ The advantages of this approach are
 - **Security**: API routes allow sensitive logic (e.g., attaching authentication tokens) to be handled server-side, away from the frontend, ensuring that sensitive data like access tokens are not exposed.
 - **Modularity**: By creating specific API routes for different functionalities, such as `/api/chat`, the codebase remains modular and easier to maintain.
 
+<!-- TOC --><a name="54-appearance"></a>
 ## 5.4. Appearance
 
 ![frontend-4](https://github.com/user-attachments/assets/9d19b7ac-805d-44eb-81f0-ed2dd024f201)
