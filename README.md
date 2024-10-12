@@ -120,15 +120,18 @@ To refresh the **`accessToken`**, the user calls the **`/auth/api/v1/refreshTo
 
 **Login**
 
-!https://github.com/MrCharlesSG/Insurance-Documentation/raw/main/documents/Secure%20Coding/images/AuthDiagrams-Login.drawio.png
+![login](https://github.com/user-attachments/assets/3ffe55ec-e0dd-4266-909c-591dbb4a4ad0)
+
 
 **Register**
 
-![AuthDiagrams-Register.jpg](https://prod-files-secure.s3.us-west-2.amazonaws.com/9121be76-a9c3-467d-a849-7d619cca73f9/e4dab941-26bc-46ef-a342-0eab66b9eda8/AuthDiagrams-Register.jpg)
+![register](https://github.com/user-attachments/assets/27e3fb5f-46ab-4559-80e7-2ce9e598514c)
+
 
 **Refresh Token**
 
-!https://github.com/MrCharlesSG/Insurance-Documentation/raw/main/documents/Secure%20Coding/images/Untitled%201.png
+![token](https://github.com/user-attachments/assets/7393d045-c90e-433b-ab09-bd728ac5f7ec)
+
 
 ## 4.2. OAuth 2 Integration with GitHub
 
@@ -145,7 +148,7 @@ This project follows GitHub's recommended OAuth 2.0 flow for web applications to
 7. The server then redirects the user back to the frontend, sending the authentication tokens (such as access and refresh tokens) as parameters.
 8. The frontend stores these tokens (usually in cookies) and grants the user access to protected resources.
 
-!https://prod-files-secure.s3.us-west-2.amazonaws.com/9121be76-a9c3-467d-a849-7d619cca73f9/e4aa500b-aae0-4aef-9ee7-b17a92ee612a/AuthDiagrams-Page-4.jpg
+![oauth](https://github.com/user-attachments/assets/6abe2deb-971c-4654-a4c5-949cd0588d44)
 
 ### 4.2.2. Implementation Details
 
@@ -308,7 +311,7 @@ The workflow for using functions in the LLaMA model is as follows:
 4. The function’s result is combined with the user query and the conversation history.
 5.  The model then processes this information and formulates a response to be returned to the client.
 
-![Models Functions-2.jpg](https://prod-files-secure.s3.us-west-2.amazonaws.com/9121be76-a9c3-467d-a849-7d619cca73f9/439bd08d-2aeb-4892-9c24-00bc2ee3b84b/Models_Functions-2.jpg)
+![Models Functions-2](https://github.com/user-attachments/assets/4171d97c-1ecb-4dd9-92e6-e5e67e95824f)
 
 ### 4.3.2. Code Implementation
 
