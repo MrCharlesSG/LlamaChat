@@ -114,8 +114,9 @@ The application supports the following key user stories:
 <!-- TOC --><a name="3-getting-started"></a>
 # 3. Getting Started
 
-The application can not be cloned an run easily since it is needed some private keys for accessing service such us the OAuth with Github or the Weather API for the real-time data.
+If you clone the proyect directly, you won't be able to run it directly. Instead you need to set the Github client key and the secret key. Also you will need to set the weather key.
 
+I am working on containerizing the application.
 <!-- TOC --><a name="4-spring-architecture"></a>
 # 4. Spring Architecture
 
