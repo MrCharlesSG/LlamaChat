@@ -17,8 +17,6 @@
       + [4.2.1. Authentication Flow](#421-authentication-flow)
       + [4.2.2. Implementation Details](#422-implementation-details)
       + [4.2.3. Key Components](#423-key-components)
-      + [**`SecurityConfig` Class**](#securityconfig-class)
-      + [**OAuth2 Authentication Success Handler**](#oauth2-authentication-success-handler)
    * [4.3. AI Integration](#43-ai-integration)
       + [4.3.1. AI Functions](#431-ai-functions)
       + [4.3.2. Code Implementation](#432-code-implementation)
