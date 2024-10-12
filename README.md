@@ -437,7 +437,7 @@ The workflow for using functions in the LLaMA model is as follows:
 
 ## 4.4. Domain
 
-![ER.jpg](https://prod-files-secure.s3.us-west-2.amazonaws.com/9121be76-a9c3-467d-a849-7d619cca73f9/1ae72e27-b15f-4fba-baa0-f84ec666d2c9/ER.jpg)
+![domain](https://github.com/user-attachments/assets/02075c4d-70e5-4412-94a7-de753eccfd93)
 
 # 5. Next.js Architecture
 
@@ -493,10 +493,8 @@ The advantages of this approach are
 
 ## 5.4. Appearance
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9121be76-a9c3-467d-a849-7d619cca73f9/c394c97a-7a65-467a-ab68-b3c07e4da35a/image.png)
+![frontend-4](https://github.com/user-attachments/assets/9d19b7ac-805d-44eb-81f0-ed2dd024f201)
+![frontend-3](https://github.com/user-attachments/assets/bbc69c17-8ab5-4040-b586-c4655340a85d)
+![frontend-2](https://github.com/user-attachments/assets/166d1da3-b744-4d8e-b27a-176031ff9a41)
+![frontend-1](https://github.com/user-attachments/assets/ba97c95d-eb52-4813-8ede-e1a2ca267106)
 
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9121be76-a9c3-467d-a849-7d619cca73f9/6af16554-4139-4b54-9f02-a70d31098567/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9121be76-a9c3-467d-a849-7d619cca73f9/20870f49-2954-4a3d-b1cb-e3b54bfc4a85/image.png)
-
-![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/9121be76-a9c3-467d-a849-7d619cca73f9/a7d61c5f-4067-4ea4-8c51-a8dce010e270/image.png)
